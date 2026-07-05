@@ -1,3 +1,4 @@
+import { requireApiRole } from "@/lib/api-auth";
 import { getReportsSummary } from "@/lib/supabase/dire-data";
 
 function csvEscape(value: string | number) {
@@ -6,6 +7,15 @@ function csvEscape(value: string | number) {
 }
 
 export async function GET() {
+  const auth = await requireApiRole([
+    "super_admin",
+    "operations",
+    "finance",
+    "support",
+    "warehouse",
+  ]);
+  if (!auth.ok) return auth.response;
+
   const reports = await getReportsSummary();
   const lines = [
     ["section", "label", "value"],
