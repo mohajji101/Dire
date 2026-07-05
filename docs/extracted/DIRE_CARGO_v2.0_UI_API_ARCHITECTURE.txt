@@ -1,0 +1,468 @@
+🚚 Dire Cargo v2.0 — UI Screens,
+Dashboards & API Architecture
+Full UI/UX Wireframe Specification + Dashboard Structure + Backend API Design
+Built for Next.js + Supabase Enterprise Logistics System
+
+
+
+
+🧭 1. Overview of v2.0
+This version defines:
+
+      Full UI screens (all system pages)
+      Dashboard layouts per role
+      Page wireframes (structure, not visuals)
+      Complete API endpoint architecture
+      System navigation flow
+
+
+
+
+🖥️ 2. GLOBAL APPLICATION LAYOUT
+Main Layout Structure
+[Sidebar Navigation] | [Top Navbar] | [Main Content Area]
+
+Sidebar (Role-Based Dynamic Menu)
+
+      Dashboard
+      Shipments
+      Customers
+      Warehouse
+      Buy & Ship
+      Finance
+      Reports
+      Support
+      Settings
+
+
+
+Top Navbar
+
+      Search Bar (Tracking / Customer / Invoice)
+      Notifications Bell
+      Currency Switcher (USD / CNY)
+     Profile Menu
+
+
+
+
+📊 3. DASHBOARD SCREENS
+3.1 Super Admin Dashboard
+Widgets
+
+     Total Customers
+     Active Shipments
+     Revenue (USD + CNY)
+     Pending Invoices
+     Warehouse Load
+     System Activity Logs
+
+Charts
+
+     Air vs Sea Shipment Ratio
+     Monthly Revenue Trend
+     Top Customers
+     Shipment Status Distribution
+
+
+
+
+3.2 Operations Dashboard
+Widgets
+
+     Pending Shipments
+     In Transit
+     Customs Clearance Queue
+     Ready for Pickup
+
+Actions
+
+     Approve Shipment
+     Update Status
+     Assign Warehouse
+3.3 Warehouse Dashboard (China +
+Somalia)
+Widgets
+
+     Packages Received Today
+     Pending Verification
+     Stored Packages
+     Ready for Shipment
+     Storage Capacity
+
+Warehouse Map UI
+
+     Zone A / B / C visualization
+     Shelf grid (A1, B2, C3)
+
+
+
+
+3.4 Finance Dashboard
+Widgets
+
+     Total Revenue
+     Outstanding Payments
+     Paid Invoices
+     Expenses
+     Profit Estimate
+
+Charts
+
+     Income vs Expenses
+     Currency Breakdown (USD vs CNY)
+
+
+
+
+3.5 Customer Dashboard
+Widgets
+
+     Active Shipments
+     Shipment History
+     Invoices
+     Notifications
+     Support Tickets
+Quick Actions
+
+         Track Shipment
+         Create Buy & Ship Request
+         Download Invoice
+
+
+
+
+📦 4. CORE UI SCREENS (PAGES)
+4.1 Authentication Pages
+Login Page
+Fields:
+
+         Email / Phone
+         Password
+         OTP Option
+
+Register Page
+         Name
+         Phone
+         Email
+         Password
+         Customer Type Selection
+
+
+
+
+4.2 Customer Pages
+Customer List Page (Admin)
+         Search customers
+         Filter by type
+         View profile
+         View shipments
+
+Customer Profile Page
+         Customer details
+         Shipment history
+         Financial summary
+          Documents
+
+
+
+
+4.3 Shipment Pages
+Shipment List Page
+Filters:
+
+          Status
+          Type (Air / Sea / Buy & Ship)
+          Date range
+
+Columns:
+
+          Tracking Number
+          Customer
+          Status
+          Weight / CBM
+          Location
+
+
+
+
+Shipment Details Page
+Sections:
+
+          Tracking Timeline
+          Package Info
+          Photos
+          Status History
+          Invoice Link
+          Warehouse Info
+
+
+
+
+Create Shipment Page
+Form:
+
+          Customer selection
+          Shipment type
+          Origin / Destination
+          Package details
+          Weight / CBM
+          Pricing auto-calculation
+4.4 Warehouse Pages
+Warehouse Overview
+      Zones (A, B, C)
+      Storage usage
+      Incoming packages
+
+
+
+
+Package Receiving Page
+      Scan customer code (DC1001)
+      Upload photo
+      Enter weight
+      Assign shelf (A1, B2)
+      Save package
+
+
+
+
+Storage Map Page
+Visual grid:
+
+      Zone → Shelf → Package
+
+
+
+
+4.5 Buy & Ship Pages
+Request List
+      Product name
+      Customer
+      Status
+      Estimated cost
+
+Request Detail
+      Product link
+      Supplier info
+      Status flow
+      Payment status
+4.6 Finance Pages
+Invoice List
+     Invoice number
+     Customer
+     Amount
+     Status
+
+Invoice Detail
+     Charges breakdown
+     Payment history
+     Download PDF
+
+Payments Page
+     Payment method
+     Transaction reference
+     Reconciliation status
+
+
+
+
+4.7 Support System
+Ticket List
+     Open / Closed
+     Priority
+     Customer
+
+Ticket Detail
+     Messages thread
+     Attachments
+     Status update
+
+
+
+
+4.8 Reports Pages
+     Revenue Reports
+      Shipment Reports
+      Customer Reports
+      Warehouse Efficiency
+      Air vs Sea Analytics
+
+
+
+
+⚙️ 5. SYSTEM API ARCHITECTURE
+Base URL:
+
+/api/v1
+
+
+
+
+5.1 AUTH APIs
+POST    /auth/login
+POST    /auth/register
+POST    /auth/logout
+POST    /auth/otp/verify
+GET     /auth/me
+
+
+
+
+5.2 CUSTOMER APIs
+GET    /customers
+POST   /customers
+GET    /customers/:id
+PUT    /customers/:id
+DELETE /customers/:id
+
+
+
+
+5.3 SHIPMENT APIs
+GET    /shipments
+POST   /shipments
+GET    /shipments/:id
+PUT    /shipments/:id
+DELETE /shipments/:id
+
+
+
+Tracking API
+GET /shipments/track/:trackingNumber
+
+
+
+Shipment Status Update
+POST /shipments/:id/status
+5.4 WAREHOUSE APIs
+GET    /warehouse/packages
+POST   /warehouse/receive
+POST   /warehouse/assign-shelf
+GET    /warehouse/zones
+
+
+
+
+5.5 BUY & SHIP APIs
+GET    /buy-ship
+POST   /buy-ship
+GET    /buy-ship/:id
+PUT    /buy-ship/:id
+
+
+
+
+5.6 FINANCE APIs
+GET    /invoices
+POST   /invoices
+GET    /invoices/:id
+POST   /payments
+GET    /payments
+
+
+
+
+5.7 REPORTS APIs
+GET /reports/revenue
+GET /reports/shipments
+GET /reports/customers
+GET /reports/warehouse
+
+
+
+
+5.8 NOTIFICATIONS APIs
+GET    /notifications
+POST   /notifications/send
+PUT    /notifications/:id/read
+
+
+
+
+🔐 6. ROLE-BASED ACCESS (API
+SECURITY)
+Rules
+      Customers → Only own data
+      Staff → Assigned modules only
+      Admin → Full access
+
+
+
+
+📡 7. REALTIME EVENTS (Supabase)
+Events
+      shipment_status_changed
+      package_received
+      invoice_paid
+      warehouse_updated
+      new_support_ticket
+
+
+
+
+🧭 8. UI NAVIGATION FLOW
+Login
+  ↓
+Dashboard
+  ↓
+Role-based Menu
+  ↓
+Modules (Shipments / Warehouse / Finance / Support)
+  ↓
+Detail Pages
+
+
+
+
+🎨 9. UI DESIGN SYSTEM (WIRE
+STYLE)
+Components
+      Cards (soft shadow, rounded)
+      Tables (striped rows, filters)
+      Timeline (shipment tracking)
+      Badges (status indicators)
+      Modals (forms)
+      Drawer panels (details view)
+Status Colors
+      Pending → Yellow
+      In Transit → Blue
+      Delivered → Green
+      Cancelled → Red
+      Warehouse → Gray
+
+
+
+
+📱 10. MOBILE RESPONSIVE
+BEHAVIOR
+      Sidebar collapses to hamburger menu
+      Tables become card lists
+      Dashboard widgets stack vertically
+      Forms full-width
+
+
+
+
+🚀 11. SYSTEM READINESS SUMMARY
+Completed in v2.0
+      Full UI structure
+      All system screens
+      Dashboard architecture
+      API design blueprint
+      Role-based navigation
+      Realtime system events
+      Security structure
+
+
+
+
+🎯 FINAL RESULT
+Dire Cargo v2.0 defines a complete enterprise-level logistics UI and API system ready for:
+
+      UI development (Next.js)
+      Backend integration (Supabase)
+      Dashboard implementation
+      Warehouse system build
+      Full production deployment
+

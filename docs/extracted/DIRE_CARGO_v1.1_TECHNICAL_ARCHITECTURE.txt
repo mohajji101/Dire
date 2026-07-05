@@ -1,0 +1,385 @@
+ DIRE CARGO v1.1 — TECHNICAL ARCHITECTURE
+System Architecture
+Customers
+    │
+    ▼
+Next.js Frontend
+    │
+    ▼
+Supabase Platform
+ ├── Authentication
+ ├── PostgreSQL Database
+ ├── Realtime Engine
+ ├── Storage
+ └── Security (RLS)
+    │
+    ▼
+Admin Dashboard
+Customer Portal
+Warehouse Portal
+Finance Portal
+Reports Portal
+
+
+Database Design
+Core Entities
+Identity Layer
+users
+id
+email
+phone
+password_hash
+status
+last_login
+created_at
+roles
+id
+name
+description
+permissions
+id
+name
+module
+user_roles
+id
+user_id
+role_id
+
+
+Customer Module
+customers
+id
+customer_code
+suite_number
+customer_type
+first_name
+last_name
+company_name
+email
+phone
+country
+city
+address
+status
+created_at
+customer_documents
+id
+customer_id
+document_type
+file_url
+created_at
+
+
+Branch Management
+branches
+id
+name
+country
+city
+branch_type
+status
+Examples:
+    Muqdisho HQ
+    China Office
+    China Warehouse
+
+
+Warehouse Module
+warehouses
+id
+branch_id
+name
+country
+city
+warehouse_zones
+id
+warehouse_id
+zone_name
+Examples:
+    Zone A
+    Zone B
+    Zone C
+
+warehouse_shelves
+id
+zone_id
+shelf_code
+Examples:
+    A1
+    A2
+    B1
+    C3
+Shipment Module
+shipments
+id
+tracking_number
+customer_id
+shipment_type
+origin_country
+destination_country
+status
+expected_arrival
+created_at
+Shipment Types:
+    AIR
+    SEA
+    BUY_AND_SHIP
+
+shipment_status_history
+id
+shipment_id
+status
+notes
+updated_by
+created_at
+
+shipment_packages
+id
+shipment_id
+package_code
+weight
+length
+width
+height
+volume
+declared_value
+
+shipment_photos
+id
+shipment_id
+photo_url
+uploaded_by
+created_at
+
+
+Buy & Ship Module
+buy_ship_requests
+id
+customer_id
+product_name
+purchase_link
+quantity
+estimated_price
+status
+created_at
+Warehouse Receiving
+warehouse_receipts
+id
+customer_id
+shipment_id
+warehouse_id
+received_date
+received_by
+
+
+Customs Module
+customs_clearance
+id
+shipment_id
+status
+notes
+cleared_date
+
+
+Pricing Engine
+pricing_rules
+id
+shipment_type
+minimum_value
+maximum_value
+price
+currency
+Examples:
+AIR
+0-20 KG
+20-100 KG
+100+ KG
+SEA
+1-5 CBM
+5-20 CBM
+20+ CBM
+
+
+Finance Module
+invoices
+id
+invoice_number
+customer_id
+shipment_id
+currency
+subtotal
+service_fee
+total_amount
+status
+created_at
+
+payments
+id
+invoice_id
+payment_method
+amount
+currency
+reference_number
+payment_date
+
+expenses
+id
+category
+amount
+currency
+description
+created_by
+created_at
+
+
+Currency Module
+currencies
+id
+code
+name
+symbol
+Examples:
+    USD
+    CNY
+    SOS
+    AED
+
+exchange_rates
+id
+from_currency
+to_currency
+rate
+effective_date
+
+
+Customer Support
+support_tickets
+id
+ticket_number
+customer_id
+subject
+message
+status
+priority
+created_at
+
+ticket_messages
+id
+ticket_id
+sender_id
+message
+created_at
+
+
+Notification System
+notifications
+id
+user_id
+title
+message
+type
+is_read
+created_at
+
+
+Audit System
+audit_logs
+id
+user_id
+action
+module
+old_value
+new_value
+created_at
+
+
+Dashboard Structure
+Super Admin Dashboard
+Widgets:
+    Total Customers
+    Active Shipments
+    Revenue
+    Outstanding Invoices
+    Warehouse Inventory
+    Air Cargo Statistics
+    Sea Freight Statistics
+
+
+Operations Dashboard
+Widgets:
+    Pending Shipments
+    In Transit
+    Customs Clearance
+    Ready for Pickup
+
+
+Finance Dashboard
+Widgets:
+    Revenue
+    Expenses
+    Profit
+    Unpaid Invoices
+
+
+Warehouse Dashboard
+Widgets:
+    Received Today
+    Pending Verification
+       Storage Capacity
+       Ready for Shipment
+
+Customer Dashboard
+Widgets:
+    Active Shipments
+    Shipment History
+    Invoices
+    Notifications
+    Support Tickets
+
+
+Supabase Storage Buckets
+package-photos
+       Shipment photos
+customer-documents
+       IDs
+       Business documents
+invoices
+       PDF invoices
+customs-documents
+       Customs files
+
+
+Row Level Security (RLS)
+Customers
+Waxay arki karaan oo keliya:
+   Profile-kooda
+   Shipments-kooda
+   Invoices-kooda
+   Payments-kooda
+   Tickets-kooda
+Staff
+Waxay arki karaan modules-ka loo oggolaaday role-kooda.
+Super Admin
+Full Access.
+
+
+Next.js Folder Structure
+src/
+├── app/
+├── components/
+├── modules/
+│    ├── auth/
+│    ├── customers/
+│    ├── shipments/
+│    ├── warehouse/
+│    ├── finance/
+│    ├── support/
+│    ├── reports/
+│    └── settings/
+├── lib/
+├── hooks/
+├── services/
+├── store/
+├── types/
+└── utils/
+

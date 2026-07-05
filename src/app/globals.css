@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+:root {
+  --surface: #fbf9fb;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f5f3f6;
+  --surface-container: #efedf0;
+  --surface-container-high: #e9e7ea;
+  --surface-container-highest: #e4e2e5;
+  --on-surface: #1b1b1e;
+  --on-surface-variant: #44474d;
+  --outline: #75777e;
+  --outline-variant: #c5c6ce;
+  --primary: #000616;
+  --primary-container: #0b1f3b;
+  --on-primary: #ffffff;
+  --secondary: #755b00;
+  --secondary-container: #fed255;
+  --on-secondary-container: #735a00;
+  --error: #ba1a1a;
+  --success: #047857;
+  --info: #1d4ed8;
+}
+
+@theme inline {
+  --color-surface: var(--surface);
+  --color-surface-container-lowest: var(--surface-container-lowest);
+  --color-surface-container-low: var(--surface-container-low);
+  --color-surface-container: var(--surface-container);
+  --color-surface-container-high: var(--surface-container-high);
+  --color-surface-container-highest: var(--surface-container-highest);
+  --color-on-surface: var(--on-surface);
+  --color-on-surface-variant: var(--on-surface-variant);
+  --color-outline: var(--outline);
+  --color-outline-variant: var(--outline-variant);
+  --color-primary: var(--primary);
+  --color-primary-container: var(--primary-container);
+  --color-on-primary: var(--on-primary);
+  --color-secondary: var(--secondary);
+  --color-secondary-container: var(--secondary-container);
+  --color-on-secondary-container: var(--on-secondary-container);
+  --color-error: var(--error);
+  --color-success: var(--success);
+  --color-info: var(--info);
+  --font-heading: var(--font-montserrat);
+  --font-body: var(--font-open-sans);
+  --font-data: var(--font-inter);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-open-sans), Arial, Helvetica, sans-serif;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+}
+
+.kanban-scroll::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.kanban-scroll::-webkit-scrollbar-track {
+  background: var(--surface-container-low);
+  border-radius: 4px;
+}
+
+.kanban-scroll::-webkit-scrollbar-thumb {
+  background: var(--outline-variant);
+  border-radius: 4px;
+}
+
+.kanban-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--outline);
+}
